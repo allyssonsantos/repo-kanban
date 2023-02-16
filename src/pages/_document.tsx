@@ -11,7 +11,7 @@ export default class Document extends NextDocument {
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
-          <link rel="icon" href="/public/favicon.svg" />
+          <link rel="icon" href="/favicon.svg" />
         </Head>
         <body>
           <Main />
