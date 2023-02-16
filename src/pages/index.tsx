@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import Head from 'next/head';
 
+import { HomeFeature } from '@/features/HomeFeature';
 import { BaseLayout } from '@/layouts';
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Head>
         <title>Repository Kanban - CodeSandbox</title>
       </Head>
+      <HomeFeature />
     </>
   );
 }
