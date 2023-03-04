@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { useLocalStorage } from '@/hooks';
-import { Button, Flex, Input, Text, CodeSandboxLogo } from '@/components';
+import { Button, Flex, Input, Text } from '@/components';
 
 import { createHistory, REGEX_HTTPS } from './utils';
 import { PreviousList } from './components';
@@ -79,7 +79,9 @@ export function HomeFeature() {
         gap="3"
         css={{ padding: '$3', '@bp1': { flexDirection: 'column' } }}
       >
-        <CodeSandboxLogo />
+        <Text variant="bold" size="3">
+          Repository Kanban
+        </Text>
         <Flex
           full
           as="form"

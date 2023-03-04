@@ -10,13 +10,12 @@ export const StyledPreviousList = styled('ul', {
   },
 });
 
-export function PreviousList({
-  items,
-  onSelect,
-}: {
+type Props = {
   items: string[];
   onSelect: (item: string) => void;
-}) {
+};
+
+export function PreviousList({ items, onSelect }: Props) {
   return (
     <div>
       <Text variant="bold">Previous searches:</Text>

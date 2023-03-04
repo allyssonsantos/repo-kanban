@@ -1,14 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
 
+import type { TBoardData } from '@/types';
 import { Box, Button, Flex, Text } from '@/components';
 import { ArrowBack, Star } from '@/icons';
-import { BoardData } from '@/pages/board';
+import { useBoard } from './hooks/useBoard';
 import { Board } from './components';
 
 const kFormatter = Intl.NumberFormat('en', { notation: 'compact' });
 
-export function BoardFeature({ repo, branches }: BoardData) {
+export function BoardFeature({ repo, branches }: TBoardData) {
+  const { availableColumns, board, updateBranchStatus } = useBoard({
+    boardId: repo.id,
+    repoName: repo.name,
+    branches,
+  });
+
   return (
     <Flex direction="column" gap="6" full>
       <Flex justify="between" gap="1" css={{ paddingInline: '$2' }}>
@@ -57,7 +64,11 @@ export function BoardFeature({ repo, branches }: BoardData) {
             minWidth: 650,
           }}
         >
-          <Board repo={repo} branches={branches} />
+          <Board
+            availableColumns={availableColumns}
+            board={board}
+            onBranchMove={updateBranchStatus}
+          />
         </Box>
       </Box>
     </Flex>

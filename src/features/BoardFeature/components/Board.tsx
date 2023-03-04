@@ -1,37 +1,42 @@
-import { BoardData } from '@/pages/board';
 import { Box, Text, Flex, Card, CardContent, Button } from '@/components';
 import { ChevronLeft, ChevronRight } from '@/icons';
 
-import { useBoard } from '../hooks/useBoard';
+import type { Column, Board } from '../model';
 
 type ChangeColumn = {
   branch: string;
   newIndex: number;
 };
 
-export function Board({ repo, branches }: BoardData) {
-  const { columns, board, updateBranchStatus } = useBoard({
-    boardId: repo.id,
-    repoName: repo.name,
-    branches,
-  });
+type TBoard = {
+  availableColumns: Omit<Column, 'items'>[];
+  board: Board;
+  onBranchMove: ({
+    branch,
+    columnKey,
+  }: {
+    branch: string;
+    columnKey: string;
+  }) => void;
+};
 
-  if (!board || !columns) {
+export function Board({ availableColumns, board, onBranchMove }: TBoard) {
+  if (!board || !availableColumns) {
     return <Text>Loading...</Text>;
   }
 
   const handleChangeColumn = ({ branch, newIndex }: ChangeColumn) => {
-    const destinationColumn = columns[newIndex];
+    const destinationColumn = availableColumns[newIndex];
 
     if (destinationColumn) {
       const columnKey = destinationColumn.key;
-      updateBranchStatus({ branch, columnKey });
+      onBranchMove({ branch, columnKey });
     }
   };
 
   return (
     <>
-      {columns.map((column, index) => {
+      {availableColumns.map((column, index) => {
         const columnBranches = board.find(
           (boardColumns) => boardColumns.id === column.id
         );
@@ -61,10 +66,12 @@ export function Board({ repo, branches }: BoardData) {
                     variant="icon"
                     data-testid="move-prev"
                     css={{ alignSelf: 'stretch' }}
-                    disabled={!Boolean(columns[index - 1])}
+                    disabled={!Boolean(availableColumns[index - 1])}
                     aria-label={
-                      columns[index - 1] &&
-                      `move branch to ${columns[index - 1].name} column`
+                      availableColumns[index - 1] &&
+                      `move branch to ${
+                        availableColumns[index - 1].name
+                      } column`
                     }
                     onClick={() =>
                       handleChangeColumn({
@@ -81,10 +88,12 @@ export function Board({ repo, branches }: BoardData) {
                     data-testid="move-next"
                     css={{ alignSelf: 'stretch' }}
                     aria-label={
-                      columns[index + 1] &&
-                      `move branch to ${columns[index + 1].name} column`
+                      availableColumns[index + 1] &&
+                      `move branch to ${
+                        availableColumns[index + 1].name
+                      } column`
                     }
-                    disabled={!Boolean(columns[index + 1])}
+                    disabled={!Boolean(availableColumns[index + 1])}
                     onClick={() =>
                       handleChangeColumn({
                         branch,

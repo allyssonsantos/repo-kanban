@@ -98,7 +98,7 @@ export function useBoard({
 
   return {
     board: currentBoard,
-    columns: availableColumns,
+    availableColumns,
     updateBranchStatus,
   };
 }
