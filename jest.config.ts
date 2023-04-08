@@ -1,5 +1,5 @@
-const structuredClone = require('@ungap/structured-clone');
-const nextJest = require('next/jest');
+import structuredClone from '@ungap/structured-clone';
+import nextJest from 'next/jest';
 
 const createJestConfig = nextJest({
   dir: './',
@@ -11,11 +11,11 @@ const customJestConfig = {
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1',
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   globals: {
-    structuredClone: structuredClone.default,
+    structuredClone: structuredClone,
   },
 };
 
-module.exports = createJestConfig(customJestConfig);
+export default createJestConfig(customJestConfig);
