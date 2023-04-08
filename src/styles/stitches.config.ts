@@ -41,7 +41,8 @@ export const { styled, globalCss, getCssText, createTheme, css, keyframes } =
         3: '16px',
         4: '20px',
         5: '24px',
-        6: '100px',
+        6: '50px',
+        7: '100px',
       },
     },
     utils: {
