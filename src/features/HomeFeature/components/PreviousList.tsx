@@ -22,7 +22,13 @@ export function PreviousList({ items, onSelect }: Props) {
       <StyledPreviousList>
         {items.map((item) => (
           <li key={item}>
-            <Button type="button" onClick={() => onSelect(item)}>
+            <Button
+              type="button"
+              onClick={() => onSelect(item)}
+              css={{
+                width: '100%',
+              }}
+            >
               {item}
             </Button>
           </li>

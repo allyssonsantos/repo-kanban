@@ -78,7 +78,10 @@ export function HomeFeature() {
         full
         justify="between"
         gap="3"
-        css={{ padding: '$3', '@bp1': { flexDirection: 'column' } }}
+        css={{
+          padding: '$3',
+          '@bp1': { flexDirection: 'column', alignItems: 'center' },
+        }}
       >
         <Logo />
         <Flex
@@ -86,7 +89,7 @@ export function HomeFeature() {
           as="form"
           direction="column"
           gap="6"
-          css={{ maxWidth: 754 }}
+          css={{ maxWidth: 754, '@bp1': { alignItems: 'center' } }}
           onSubmit={handleSubmit}
         >
           <Text
@@ -99,7 +102,7 @@ export function HomeFeature() {
           >
             Start by pasting the repository URL.
           </Text>
-          <Flex direction="column" gap="4">
+          <Flex direction="column" gap="4" style={{ width: '100%' }}>
             <Flex grow gap="2">
               <Input
                 placeholder="https://"

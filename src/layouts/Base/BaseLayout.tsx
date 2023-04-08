@@ -1,20 +1,25 @@
 import { PropsWithChildren } from 'react';
 import { Inter } from '@next/font/google';
-import { Box, ThemeSwitcher } from '@/components';
 import { ThemeProvider } from 'next-themes';
-
-import { lightTheme, GlobalStyles, keyframes } from '@/styles/stitches.config';
 import { useRouter } from 'next/router';
+
+import { Transition } from '@/animation';
+import { Box, ThemeSwitcher } from '@/components';
+import { lightTheme, GlobalStyles, keyframes } from '@/styles/stitches.config';
 
 const inter = Inter({ subsets: ['latin'] });
 
 type Props = PropsWithChildren<{}>;
 
 const fadeIn = keyframes({
-  from: {
+  '0%': {
     opacity: 0,
   },
-  to: {
+
+  '80%': {
+    opacity: 0,
+  },
+  '100%': {
     opacity: 1,
   },
 });
@@ -47,7 +52,7 @@ export function BaseLayout({ children }: Props) {
           maxWidth: '1140px',
           position: 'relative',
           width: '100%',
-          animation: `${fadeIn} 500ms forwards`,
+          animation: `${fadeIn} 250ms forwards`,
         }}
       >
         {children}
@@ -59,6 +64,7 @@ export function BaseLayout({ children }: Props) {
           }}
         />
       </Box>
+      <Transition key={`${router.pathname}-transition`} aria-hidden />
     </ThemeProvider>
   );
 }
