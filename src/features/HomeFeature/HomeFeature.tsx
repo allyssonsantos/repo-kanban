@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { useLocalStorage } from '@/hooks';
 import { Button, Flex, Input, Text } from '@/components';
+import { Logo } from '@/icons';
 
 import { createHistory, REGEX_HTTPS } from './utils';
 import { PreviousList } from './components';
@@ -79,9 +80,7 @@ export function HomeFeature() {
         gap="3"
         css={{ padding: '$3', '@bp1': { flexDirection: 'column' } }}
       >
-        <Text variant="bold" size="3">
-          Repository Kanban
-        </Text>
+        <Logo />
         <Flex
           full
           as="form"

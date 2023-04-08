@@ -1,16 +1,18 @@
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+<svg viewBox="0 0 80 70" fill="none" xmlns="http://www.w3.org/2000/svg">
 <style>
 svg {
 background: transparent;
 }
 path {
 fill: black;
+stroke: black;
 }
 @media (prefers-color-scheme: dark)  {
 path {
 fill: white;
+stroke: white;
 }
 }
 </style>
-<path fill-rule='evenodd' clip-rule='evenodd' d='M81.8182 18.1818V81.8182H18.1818V18.1818H81.8182ZM10 90V10H90V90H10Z'/>
+<path d="M4.05995 9.74999L36.1029 65.25C37.8349 68.25 42.1651 68.25 43.8971 65.25L75.9401 9.75C77.6721 6.75001 75.5071 3 72.0429 3L7.95707 2.99999C4.49297 2.99999 2.32789 6.74999 4.05995 9.74999Z" stroke-width="5"/>
 </svg>
