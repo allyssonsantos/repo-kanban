@@ -9,11 +9,11 @@ import { Board } from './components';
 
 const kFormatter = Intl.NumberFormat('en', { notation: 'compact' });
 
-export function BoardFeature({ repo, branches }: TBoardData) {
-  const { availableColumns, board, updateBranchStatus } = useBoard({
-    boardId: repo.id,
+export function BoardFeature({ repo, branches, availableColumns }: TBoardData) {
+  const { board, updateBranchStatus } = useBoard({
     repoName: repo.name,
     branches,
+    availableColumns,
   });
 
   return (

@@ -1,15 +1,7 @@
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { boardService } from './services';
 import { BoardFeature } from './BoardFeature';
-
-jest.mock('./services', () => ({
-  boardService: {
-    ...jest.requireActual('./services').boardService,
-    getBoardColumns: jest.fn(),
-  },
-}));
 
 const mockedRepo = {
   id: 1,
@@ -21,34 +13,35 @@ const mockedRepo = {
 
 const mockedBranches = ['main', 'staging', 'develop'];
 
-const mockedColumns = {
-  id: 'foo',
-  columns: [
-    {
-      id: 'some-uuid',
-      key: 'inProgress',
-      name: 'In progress',
-    },
-    {
-      id: 'some-uuid-review',
-      key: 'review',
-      name: 'Review',
-    },
-    {
-      id: 'some-uuid-ready-to-merge',
-      key: 'readyToMerge',
-      name: 'Ready to merge',
-    },
-  ],
-};
+const mockedColumns = [
+  {
+    id: 'some-uuid',
+    key: 'inProgress',
+    name: 'In progress',
+  },
+  {
+    id: 'some-uuid-review',
+    key: 'review',
+    name: 'Review',
+  },
+  {
+    id: 'some-uuid-ready-to-merge',
+    key: 'readyToMerge',
+    name: 'Ready to merge',
+  },
+];
 
 describe('BoardFeature component', () => {
   const user = userEvent.setup();
 
   it('should render the correct elements', () => {
-    (boardService.getBoardColumns as jest.Mock).mockReturnValue(mockedColumns);
-
-    render(<BoardFeature repo={mockedRepo} branches={mockedBranches} />);
+    render(
+      <BoardFeature
+        repo={mockedRepo}
+        branches={mockedBranches}
+        availableColumns={mockedColumns}
+      />
+    );
 
     expect(
       screen.getByRole('link', { name: 'Go back to home page' })
@@ -76,8 +69,13 @@ describe('BoardFeature component', () => {
   });
 
   it('should move branch to next column when click in next button', async () => {
-    (boardService.getBoardColumns as jest.Mock).mockReturnValue(mockedColumns);
-    render(<BoardFeature repo={mockedRepo} branches={mockedBranches} />);
+    render(
+      <BoardFeature
+        repo={mockedRepo}
+        branches={mockedBranches}
+        availableColumns={mockedColumns}
+      />
+    );
 
     expect(screen.getByText('In progress (3)')).toBeVisible();
     expect(screen.getByText('Review (0)')).toBeVisible();
