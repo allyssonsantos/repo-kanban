@@ -2,25 +2,35 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import type { ReactElement } from 'react';
 import Head from 'next/head';
 
+import type { TBoardData } from '@/types';
 import { BoardFeature } from '@/features/BoardFeature';
 import { BaseLayout, BoardLayout } from '@/layouts';
 import {
   getRepoInformation,
   getRepoBranches,
 } from '@/features/BoardFeature/services/github';
+import { boardService } from '@/features/BoardFeature/services';
+
 // if quota exceeds, uncomment this
-import { repoMock, branchesMock } from '@/tmp/mock';
+// import { repoMock, branchesMock } from '@/tmp/mock';
 
 export default function Board({
-  repo = repoMock,
-  branches = branchesMock,
+  // repo = repoMock,
+  // branches = branchesMock,
+  repo,
+  branches,
+  availableColumns,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
         <title>Repository Kanban - CodeSandbox</title>
       </Head>
-      <BoardFeature repo={repo} branches={branches} />
+      <BoardFeature
+        repo={repo}
+        branches={branches}
+        availableColumns={availableColumns}
+      />
     </>
   );
 }
@@ -33,18 +43,7 @@ Board.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export type BoardData = {
-  repo: {
-    id: number;
-    name: string;
-    description: string | null;
-    stars: number;
-    starUrl: string;
-  };
-  branches: string[];
-};
-
-export const getServerSideProps: GetServerSideProps<BoardData> = async (
+export const getServerSideProps: GetServerSideProps<TBoardData> = async (
   context
 ) => {
   const { owner, repo } = context.query;
@@ -59,30 +58,30 @@ export const getServerSideProps: GetServerSideProps<BoardData> = async (
   }
 
   try {
-    const { id, name, description, stars, starUrl } = await getRepoInformation({
+    const repoInformation = await getRepoInformation({
       owner,
       repo,
     });
+
+    const { id: repoId } = repoInformation;
 
     const { branches } = await getRepoBranches({
       owner,
       repo,
     });
 
+    const { columns: availableColumns } = boardService.getBoardColumns(repoId);
+
     return {
       props: {
-        repo: {
-          id,
-          name,
-          description,
-          stars,
-          starUrl,
-        },
+        repo: repoInformation,
         branches,
+        availableColumns,
       },
     };
   } catch (error) {
     console.error(error);
+
     return {
       redirect: {
         destination: '/?error=true',
