@@ -6,6 +6,3 @@ export type Column = {
 };
 
 export type Board = Column[];
-export type BoardColumns = {
-  columns: Column[];
-};
