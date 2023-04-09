@@ -17,7 +17,6 @@ export const Transition = styled('div', {
   width: '80%',
   height: '100%',
   backgroundColor: '$purple',
-  transform: 'scaleX(1)',
   pointerEvents: 'none',
   boxShadow: '30px 0 20px 50px $colors$purple',
 });
