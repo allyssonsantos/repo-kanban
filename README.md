@@ -1,6 +1,6 @@
 # Repository Kanban
 
-<img src="./docs/codesandbox.png" align="right" alt="codesandbox logo" width="50%" />
+<img src="./docs/logo.png" align="right" alt="project logo" width="50%" />
 
 Are you tired of losing track of your work?
 
